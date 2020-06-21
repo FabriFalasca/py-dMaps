@@ -32,7 +32,6 @@ def lagged_correlation(x,y,tau,normed=False):
     if(tau == 0):
         return np.dot(x,y)/T;
     if(tau > 0):
-        #corr = 0; Changed by Fab
         x = x[0:T-tau];
         y = y[tau:T]
         return np.dot(x,y)/T;
