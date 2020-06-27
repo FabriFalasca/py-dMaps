@@ -68,5 +68,5 @@ if __name__ == "__main__":
 																longitudes.data,
 																delta, k);
 	plt.figure();
-	plt.plot(local_homogeity_field-seed_positions);
+	plt.imshow(local_homogeity_field-seed_positions);
 	plt.savefig('seed_map');
