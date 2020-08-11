@@ -3,11 +3,15 @@ import os
 import time
 import numpy as np
 import netCDF4
+import json
+import shutil
+import argparse
 from netCDF4 import Dataset
 from Preprocessing.preprocessing import remove_mean
 from Preprocessing.preprocessing import remove_variance
 from Utils import utils
 from SeedIdentification.seed_identification import seed_identification
+from DomainIdentification.DomainIdentification import DomainIdentification
 from matplotlib import pyplot as plt
 
 
@@ -33,32 +37,77 @@ def load_data(path_to_data, climate_variable, latitude_string, longitude_string)
 	return climate_field, latitudes, longitudes;
 
 
+def load_config(path_to_config_file):
+	"""
+	loads the configuration file
+	"""
+	with open(path_to_config_file) as f:
+		config = json.load(f);
+	return config;
 
 
+def plot_domain_map(domains):
+    dmap = np.zeros((domains[0].map.shape[0], domains[0].map.shape[1]));
+    for d in domains:
+        dmap[d.map == 1] = np.random.randint(1, len(domains)+1);
+    dmap[dmap == 0] = None
+    plt.figure(figsize=[20,20]);
+    plt.imshow(np.flipud(dmap));
+    plt.savefig('domain_map');
+
+
+def init_directories(output_dir):
+
+	if(output_dir[-1] != '/'):
+		output_dir += '/';
+
+	if(os.path.exists(output_dir)):
+		shutil.rmtree(output_dir);
+	os.mkdir(output_dir);
+
+	seed_results_dir = output_dir + "seed_identification/";
+	domain_results_dir = output_dir + "domain_identification/";
+	network_results_dir = output_dir + "network_inference/";
+
+	os.mkdir(seed_results_dir);
+	os.mkdir(domain_results_dir);
+	os.mkdir(network_results_dir);
+
+	return seed_results_dir, domain_results_dir, network_results_dir;
 
 if __name__ == "__main__":
+
+	argparser = argparse.ArgumentParser();
+	argparser.add_argument("-i","--input",required=True, help = "Path to .json config file");
+
+	args = vars(argparser.parse_args());
+	##load config file
+	config = load_config(args["input"]);
+
+	##init output directory and directories to save results
+	seed_results_dir, domain_results_dir, network_results_dir = init_directories(config["output_directory"]);
 	
+
 	##convert this to user input when done
-	path_to_data = "Data/COBEv2_preProcessed.nc";
+	path_to_data = config["path_to_data"];
 
 	##number of random samples to use when estimating delta
-	delta_rand_samples = 10000;
+	delta_rand_samples = config["delta_rand_samples"];
 	##significance threshold for delta
-	alpha = 0.01;
+	alpha = config["alpha"];
 	##number of neighbors in the local homogeneity field
-	k = 8;
+	k = config["k"];
 
 	##load data for domain identification
-	data,latitudes,longitudes = load_data(path_to_data, 'sst','lat','lon');
+	data,latitudes,longitudes = load_data(path_to_data, config["variable_name"],
+										config["latitude_name"],config["longitude_name"]);
 	##normalize time series to zero mean and unit variance
 	data = remove_mean(data);
 	data = remove_variance(data);
 
 	##convert data to a numpy array where masked values are set to NaN
 	data = utils.masked_array_to_numpy(data);
-	np.save("test_data",data);
-	np.save("lats",latitudes.data);
-	np.save("lons",longitudes.data);
+
 	##estimate delta
 	print('Estimating delta');
 	delta = utils.estimate_delta(data, delta_rand_samples, alpha);
@@ -67,6 +116,15 @@ if __name__ == "__main__":
 	local_homogeity_field, seed_positions = seed_identification(data,latitudes.data,
 																longitudes.data,
 																delta, k);
-	plt.figure();
-	plt.imshow(local_homogeity_field-seed_positions);
-	plt.savefig('seed_map');
+	np.save(seed_results_dir+"local_homogeneity_field",local_homogeneity_field);
+	np.save(seed_results_dir+"seed_positions",seed_positions);
+	##step 2. domain identification
+	domain_identifier = DomainIdentification(data, latitudes, longitudes, seed_positions, 
+												k, delta, domain_results_dir);
+	domain_identifier.domain_identification();
+	domains = domain_identifier.domains;
+	domain_identifier.dump_output();
+	
+
+	
+
