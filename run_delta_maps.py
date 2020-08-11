@@ -113,7 +113,7 @@ if __name__ == "__main__":
 	delta = utils.estimate_delta(data, delta_rand_samples, alpha);
 	print('Delta estimate: '+str(delta));
 	##step 1. seed identification
-	local_homogeity_field, seed_positions = seed_identification(data,latitudes.data,
+	local_homogeneity_field, seed_positions = seed_identification(data,latitudes.data,
 																longitudes.data,
 																delta, k);
 	np.save(seed_results_dir+"local_homogeneity_field",local_homogeneity_field);
