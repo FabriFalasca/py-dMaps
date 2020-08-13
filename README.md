@@ -174,9 +174,7 @@ In the folder "Notebooks" we show an example on how to plot the strength map.
 
 (Under construction). Here you will find some examples. 
 
-(a) Domain and strength maps of d-MAPS to COBEv2 reanalysis (i.e., global sst from 1950 to 2100)
-
-(b) 
+(a) Domain and strength maps of COBEv2 reanalysis. Global sea surface temperature (SST) from 1950 to 2100. Temporal resolution: 1 month. Number of grid points: 180x60 (2 by 2 degree with no High lats). 
 
 # (vii) PUBLICATIONS 
 
