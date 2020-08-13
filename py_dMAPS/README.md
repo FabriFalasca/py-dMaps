@@ -116,9 +116,9 @@ in the interval [r*-bartlett std(r*),r*+bartlett std(r*)]
 
 (iv) if the range [tau_min, tau_max] include zero: domain a <---> domain b
 
-(v) if tau_min > 0:                               domain a  ---> domain b
+     if tau_min > 0:                               domain a  ---> domain b
 
-(vi) if tau_max < 0:                               domain a <---  domain b
+     if tau_max < 0:                               domain a <---  domain b
 
 (vii) weight is the link weight: covariance at tau*
 
