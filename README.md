@@ -21,7 +21,7 @@ Fabrizio Falasca (fabrifalasca@gmail.com) and Ilias Fountalis (Foudalisi@hotmail
 # (i) Netcdf files 
 
 The code accepts netcdf files https://www.unidata.ucar.edu/software/netcdf/docs/netcdf_introduction.html .
-Each time series x_i(t) in the dataset is assumed to be already preprocessed (i.e., each x_i(t) should be stationary). In our case we worked often with monthly anomalies: the preprocessing involve (a) trend removal and (b) removal of the seasonal cycle.
+Each time series x_i(t) in the dataset is assumed to be already preprocessed (i.e., each x_i(t) should be stationary). In our case we work often with monthly anomalies: the preprocessing involves (a) trend removal and (b) removal of the seasonal cycle.
 
 To see the structure of a netcdf file "file.nc", open a terminal and type: 
 
