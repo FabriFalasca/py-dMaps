@@ -18,7 +18,9 @@ Fabrizio Falasca (fabrifalasca@gmail.com) and Ilias Fountalis (Foudalisi@hotmail
 
 (v) Outputs
 
-(vi) Publications
+(vi) Notebooks
+
+(vii) Publications
 
 # (i) Required Python packages
 
@@ -168,7 +170,15 @@ list with domain strengths. Each entry in the list have the following format:
 A map where each domain is defined by its strength.
 In the folder "Notebooks" we show an example on how to plot the strength map.
 
-# (vi) PUBLICATIONS 
+# (vi) Notebooks
+
+(Under construction). Here you will find some examples. 
+
+(a) Domain and strength maps of d-MAPS to COBEv2 reanalysis (i.e., global sst from 1950 to 2100)
+
+(b) 
+
+# (vii) PUBLICATIONS 
 
 I. Fountalis, C. Dovrolis, A. Bracco, B. Dilkina, and S. Keilholz.δ-MAPS from spatio-temporal data to a weighted and lagged network between functional domain.Appl. Netw. Sci., 3:21, 2018.
 
