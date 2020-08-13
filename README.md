@@ -8,17 +8,31 @@ Fabrizio Falasca (fabrifalasca@gmail.com) and Ilias Fountalis (Foudalisi@hotmail
 
 # Contents
 
-(i) Netcdf files 
+(i) Required Python Packages
 
-(ii) Preprocessing
+(ii) Netcdf files 
 
-(iii) how to run py-dMAPS
+(iii) Preprocessing
 
-(iv) Outputs
+(iv) how to run py-dMAPS
 
-(v) Publications
+(v) Outputs
 
-# (i) Netcdf files 
+(vi) Publications
+
+# (i) Required Python packages
+
+(a) numpy
+
+(b) scipy
+
+(c) scikit-learn
+
+(d) netCDF4
+
+
+
+# (ii) Netcdf files 
 
 The code accepts netcdf files https://www.unidata.ucar.edu/software/netcdf/docs/netcdf_introduction.html .
 Each time series x_i(t) in the dataset is assumed to be already preprocessed (i.e., each x_i(t) should be stationary). In our case we work often with monthly anomalies: the preprocessing involves (a) trend removal and (b) removal of the seasonal cycle.
@@ -29,7 +43,7 @@ ncdump -h file.nc
 
 To visualize netcdf files please consider the software NCVIEW by David Pierce (freely available at http://meteora.ucsd.edu/~pierce/ncview_home_page.html). Another useful software is Panoply by NASA (freely available at https://www.giss.nasa.gov/tools/panoply/).
 
-# (ii) PREPROCESSING 
+# (iii) PREPROCESSING 
 
 To preprocess a netcdf dataset we suggest to use the CDO package from MPI (https://code.mpimet.mpg.de/projects/cdo/).
 
@@ -58,7 +72,7 @@ cdo detrend input.nc output.nc
 
 cdo sellonlatbox,0,360,-60,60 input.nc output.nc
 
-# (iii) HOW TO RUN py-dMAPS 
+# (iv) HOW TO RUN py-dMAPS 
 
 * python3 run_delta_maps.py -i configs/sample_config.json
 
@@ -84,7 +98,7 @@ Inputs in the configs/sample_config.json
 
 (l) q: FDR parameter to test the significance of the lag-correlations (e.g., q = 0.05 implies that (on average) only 5% of the links identified is expected to be a false positive).
 
-# (iv) OUTPUTS 
+# (v) OUTPUTS 
 
 Outputs are saved in a "outputs" folder.
 The folder "outputs" will contain 3 subfolders:
@@ -154,7 +168,7 @@ list with domain strengths. Each entry in the list have the following format:
 A map where each domain is defined by its strength.
 In the folder "Notebooks" we show an example on how to plot the strength map.
 
-# (v) PUBLICATIONS 
+# (vi) PUBLICATIONS 
 
 I. Fountalis, C. Dovrolis, A. Bracco, B. Dilkina, and S. Keilholz.δ-MAPS from spatio-temporal data to a weighted and lagged network between functional domain.Appl. Netw. Sci., 3:21, 2018.
 
