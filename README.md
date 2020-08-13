@@ -2,6 +2,11 @@ py-dMAPS
 
 *** THIS README IS UNDER CONSTRUCTION ***
 
+Contacts
+
+Fabrizio Falasca (fabrifalasca@gmail.com)
+Ilias Fountalis (Foudalisi@hotmail.com)
+
 # Contents
 
 (i) Netcdf files 
