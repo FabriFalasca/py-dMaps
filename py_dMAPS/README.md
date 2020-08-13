@@ -5,10 +5,11 @@ py-dMAPS
 # DATASET 
 
 The code accept netcdf files https://www.unidata.ucar.edu/software/netcdf/docs/netcdf_introduction.html .
-The dataset is supposed to be already preprocessed. Each time series x_i(t) in the dataset is assumed to be already preprocessed (i.e., each x_i(t) should be stationary). In our case we worked often with monthly anomalies: the preprocessing involve (a) trend removal and (b) removal of the seasonal cycle.
-To preprocess a netcdf dataset we suggest to use the CDO package from MPI (https://code.mpimet.mpg.de/projects/cdo/).
+Each time series x_i(t) in the dataset is assumed to be already preprocessed (i.e., each x_i(t) should be stationary). In our case we worked often with monthly anomalies: the preprocessing involve (a) trend removal and (b) removal of the seasonal cycle.
 
 # PREPROCESSING 
+
+To preprocess a netcdf dataset we suggest to use the CDO package from MPI (https://code.mpimet.mpg.de/projects/cdo/).
 
 Below we show how to preprocess a spatiotemporal dataset saved as monthly averages.
 Consider a spatiotemporal climate field such as the COBEv2 reanalysis (https://psl.noaa.gov/data/gridded/data.cobe2.html) with monthly temporal and spatial resolution of 1 month and 1 by 1 degree (i.e., 360x180 time series). The temporal range goes from January 1850 to December 2018.
