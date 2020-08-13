@@ -68,7 +68,7 @@ Inputs in the configs/sample_config.json
 
 (b) output_directory: name of the output directory that will be created
 
-(c) variable name: name of the variable of interest in the netcdf file
+(c) variable name: name of the variable of interest in the netcdf file (i.e., "sst" in our case)
 
 (d) latitude: name of the variable containing latitudes (i.e., lat in our case, but other dataset could have "latitude")
 
