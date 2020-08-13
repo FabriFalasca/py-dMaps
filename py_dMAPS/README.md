@@ -1,6 +1,6 @@
 py-dMAPS
 
-*** THIS README IS UNDER CONSTRUCTION***
+*** THIS README IS UNDER CONSTRUCTION (sue us if you don't like it)***
 
 # DATASET 
 
