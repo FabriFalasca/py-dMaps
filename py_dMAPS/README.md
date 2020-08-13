@@ -4,9 +4,17 @@ py-dMAPS
 
 # Contents
 
-** cia
+(i) Netcdf files 
 
-# DATASET 
+(ii) Preprocessing
+
+(iii) how to run py-dMAPS
+
+(iv) Outputs
+
+(v) Publications
+
+# Netcdf files 
 
 The code accept netcdf files https://www.unidata.ucar.edu/software/netcdf/docs/netcdf_introduction.html .
 Each time series x_i(t) in the dataset is assumed to be already preprocessed (i.e., each x_i(t) should be stationary). In our case we worked often with monthly anomalies: the preprocessing involve (a) trend removal and (b) removal of the seasonal cycle.
