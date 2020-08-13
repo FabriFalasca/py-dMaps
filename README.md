@@ -36,7 +36,7 @@ To preprocess a netcdf dataset we suggest to use the CDO package from MPI (https
 Below we show how to preprocess a spatiotemporal dataset saved as monthly averages.
 Consider a spatiotemporal climate field such as the COBEv2 reanalysis (https://psl.noaa.gov/data/gridded/data.cobe2.html) with temporal and spatial resolution of 1 month and 1 by 1 degree (i.e., 360x180 grid points) respectively. The temporal range goes from January 1850 to December 2018.
 
-Possible preprocessing steps COBEv2.nc using CDO:
+Possible preprocessing steps using CDO:
 
 * Remap the dataset to the resolution you want (i.e, 2 by 2 degree)
 
