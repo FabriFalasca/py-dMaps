@@ -1,6 +1,6 @@
 py-dMAPS
 
-*** THIS README IS UNDER CONSTRUCTION (sue us if you must) ***
+*** THIS README IS UNDER CONSTRUCTION ***
 
 # Contents
 
