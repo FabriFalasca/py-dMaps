@@ -15,19 +15,24 @@ Consider a spatiotemporal climate field such as the COBEv2 reanalysis (https://p
 
 Possible preprocessing steps COBEv2.nc using CDO:
 
-(a) Remap the dataset to the resolution you want (i.e, 2 by 2 degree)
+* Remap the dataset to the resolution you want (i.e, 2 by 2 degree)
+
 cdo -L -remapbil,r180x90 input.nc output.nc
 
-(b) Select a period (e.g., from January 1950 to December 2015)
+* Select a period (e.g., from January 1950 to December 2015)
+
 cdo selyear,1950/2010 input.nc output.nc
 
-(c) Remove the seasonal cycle
+* Remove the seasonal cycle
+
 cdo -L -ymonsub input.nc -ymonmean input.nc output.nc 
 
-(d) Remove a linear trend
+* Remove a linear trend
+
 cdo detrend input.nc output.nc
 
-(e) Focus only on the latitudinal range from 60 degree South to 60 degree North
+* Focus only on the latitudinal range from 60 degree South to 60 degree North
+
 cdo sellonlatbox,0,360,-60,60 input.nc output.nc
 
 # HOW TO RUN py-dMAPS 
