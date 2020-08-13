@@ -40,7 +40,7 @@ cdo sellonlatbox,0,360,-60,60 input.nc output.nc
 
 * python3 run_delta_maps.py -i configs/sample_config.json
 
-- Inputs in the configs/sample_config.json
+Inputs in the configs/sample_config.json
 
 (a) path_to_data: path to the spatiotemporal dataset. Each time series x_i(t) in the dataset is assumed to be already preprocessed (i.e., each x_i(t) should be stationary)
 
