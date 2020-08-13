@@ -107,20 +107,20 @@ Each edge have the following format:
 
 where:
 
-- r* is the max significant correlation
+(i) r* is the max significant correlation
 
-- tau* is the lag correspondent to r*
+(ii) tau* is the lag correspondent to r*
 
-- [tau_min,tau_max] defines the range of lags associated with significant correlations
+(iii) [tau_min,tau_max] defines the range of lags associated with significant correlations
 in the interval [r*-bartlett std(r*),r*+bartlett std(r*)]
 
-- if the range [tau_min, tau_max] include zero: domain a <---> domain b
+(iv) if the range [tau_min, tau_max] include zero: domain a <---> domain b
 
-- if tau_min > 0:                               domain a  ---> domain b
+(v) if tau_min > 0:                               domain a  ---> domain b
 
-- if tau_max < 0:                               domain a <---  domain b
+(vi) if tau_max < 0:                               domain a <---  domain b
 
-- weight is the link weight: covariance at tau*
+(vii) weight is the link weight: covariance at tau*
 
 * strength_list.npy
 
