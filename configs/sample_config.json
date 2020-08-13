@@ -1,0 +1,12 @@
+{
+"path_to_data":"Data/COBEv2_preProcessed.nc",
+"output_directory":"foo",
+"variable_name":"sst",
+"latitude_name":"lat",
+"longitude_name":"lon",
+"delta_rand_samples":10000,
+"alpha":0.01,
+"k":8,
+"tau_max":12,
+"q":0.03
+}
