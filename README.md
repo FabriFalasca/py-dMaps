@@ -4,8 +4,7 @@ py-dMAPS
 
 Contacts
 
-Fabrizio Falasca (fabrifalasca@gmail.com)
-Ilias Fountalis (Foudalisi@hotmail.com)
+Fabrizio Falasca (fabrifalasca@gmail.com) and Ilias Fountalis (Foudalisi@hotmail.com)
 
 # Contents
 
