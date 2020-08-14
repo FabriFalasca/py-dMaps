@@ -18,7 +18,7 @@ Fabrizio Falasca (fabrifalasca@gmail.com) and Ilias Fountalis (Foudalisi@hotmail
 
 (v) Outputs
 
-(vi) Notebooks
+(vi) Notebooks (tutorials).
 
 (vii) Publications
 
