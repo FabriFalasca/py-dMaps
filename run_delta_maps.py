@@ -15,6 +15,11 @@ from DomainIdentification.DomainIdentification import DomainIdentification
 from net_inference.net_inference import net_inference
 from matplotlib import pyplot as plt
 
+
+# Authors
+# Ilias Fountalis (Foudalisi@hotmail.com) and Fabrizio Falasca (fabrifalasca@gmail.com)
+# License: GNU General Public License v3.0
+
 import time
 
 start = time.time()
@@ -90,7 +95,6 @@ if __name__ == "__main__":
 	##init output directory and directories to save results
 	seed_results_dir, domain_results_dir, network_results_dir = init_directories(config["output_directory"]);
 
-
 	##convert this to user input when done
 	path_to_data = config["path_to_data"];
 
@@ -104,6 +108,7 @@ if __name__ == "__main__":
 	##load data for domain identification
 	data,latitudes,longitudes = load_data(path_to_data, config["variable_name"],
 										config["latitude_name"],config["longitude_name"]);
+
 	##normalize time series to zero mean and unit variance
 	data = remove_mean(data);
 	data = remove_variance(data);
