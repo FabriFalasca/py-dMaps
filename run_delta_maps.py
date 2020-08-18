@@ -17,7 +17,7 @@ from matplotlib import pyplot as plt
 
 
 # Authors
-# Ilias Fountalis (Foudalisi@hotmail.com) and Fabrizio Falasca (fabrifalasca@gmail.com)
+# Ilias Fountalis (Foudalisi@hotmail.com) & Fabrizio Falasca (fabrifalasca@gmail.com)
 # License: GNU General Public License v3.0
 
 import time
