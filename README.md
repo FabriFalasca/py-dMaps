@@ -170,7 +170,7 @@ list with domain strengths. Each entry in the list have the following format:
 A map where each domain is defined by its strength.
 In the folder "Notebooks" we show an example on how to plot the strength map.
 
-# (vi) Notebooks
+# (vi) Tutorials
 
 Here you will find tutorials on how to analyze the data. (Currently under construction and more will come very soon)
 
