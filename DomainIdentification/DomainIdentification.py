@@ -51,7 +51,7 @@ class DomainIdentification(object):
 
 	def merge_domains(self):
 		"""
-		Somain merging op.
+		Domain merging op.
 		"""
 		merged = False;
 		while(True): ##while we can merge domains...
