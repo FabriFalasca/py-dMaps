@@ -58,7 +58,7 @@ Possible preprocessing steps using CDO:
 
 cdo -L -remapbil,r180x90 input.nc output.nc
 
-* Select a period (e.g., from January 1950 to December 2015)
+* Select a period (e.g., from January 1950 to December 2010)
 
 cdo selyear,1950/2010 input.nc output.nc
 
