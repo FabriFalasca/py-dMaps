@@ -172,9 +172,21 @@ In the folder "Notebooks" we show an example on how to plot the strength map.
 
 # (vi) Tutorials
 
-Here you will find tutorials on how to analyze the data. (Currently under construction and more will come very soon)
+Here you will find tutorials on how to analyze the data.
 
-(a) Domain and strength maps of COBEv2 reanalysis. Global sea surface temperature (SST) from 1950 to 2100. Temporal resolution: 1 month. Number of grid points: 180x60 (2 by 2 degree with no High lats). 
+(a) Test 1. 
+
+Output of domains identification and network inference for COBEv2 reanalysis. Global sea surface temperature (SST) from 1950 to 2100. Temporal resolution: 1 month. Number of grid points: 180x60 (2 by 2 degree with no High lats). 
+
+(b) Test 2.  
+
+Output of domains identification and network inference for ERA-Interim reanalysis. Outgoing Longwave Radiation (OLR) from 1980 to 2019. Temporal resolution: 1 month. Number of grid points: 100x150. 
+
+Note: 
+- For the COBEv2 dataset, the "true" number of grid points is almost 1/2 of 180x60 as we are focusing on SST and the land is masked. With such number of grid points the code run in ~700 seconds.
+- The time complexity scales exponential with the resolution. When we analyze the OLR dataset, we have 100x150 grid points and it took ~333461 seconds.
+- Domains can overlap: when we plot the domains and stength maps it in the tutorial it is not possible to see the overlapping. A way to show it is to plot also the domains borders (we will do it soon).
+
 
 # (vii) PUBLICATIONS 
 
