@@ -1,7 +1,5 @@
 py-dMAPS
 
-*** THIS README IS UNDER CONSTRUCTION ***
-
 Contacts
 
 Fabrizio Falasca (fabrifalasca@gmail.com) and Ilias Fountalis (Foudalisi@hotmail.com)
