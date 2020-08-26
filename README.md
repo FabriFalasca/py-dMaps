@@ -183,7 +183,7 @@ Output of domains identification and network inference for ERA-Interim reanalysi
 Note: 
 - For the COBEv2 dataset, the "true" number of grid points is almost 1/2 of 180x60 as we are focusing on SST and the land is masked. With such number of grid points the code run in ~700 seconds.
 - The time complexity scales exponential with the resolution. When we analyze the OLR dataset, we have 100x150 grid points (no mask) and it took ~333461 seconds.
-- Domains can overlap: when we plot the domains and stength maps in the tutorial it is not possible to see the overlapping. A way to show it is to plot also the domains borders (we will do it soon).
+- Domains can overlap: when we plot the domains and strength maps in the tutorial it is not possible to see the overlapping. A way to show it is to plot also the domains borders (we will do it soon).
 - As the files.nc are > 25MB, we couldn't upload them in this github repository.
 
 
