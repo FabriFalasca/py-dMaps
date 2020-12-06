@@ -118,7 +118,7 @@ if(seed_homogeneity > max(cell_homogeneities) and seed_homogeneity > delta):
 
 seed_positions[index_i,index_j] = 1;
 
-In this way all grid cells will be assigned to a domain. Note: the algorithm will be way slower, so do this with a relatively low resolution (e.g., 180x30 points would take x minutes) (Fab: insert x when you have it).
+In this way all grid cells will be assigned to a domain. Note: the algorithm will be WAY slower, so do this with a relatively low resolution (e.g., 180x30 points would take x minutes) (Fab: insert x when you have it).
 
 # (v) OUTPUTS 
 
