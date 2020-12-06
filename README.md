@@ -109,10 +109,13 @@ If this is your choice for domain identification do the following:
 (a) open SeedIdentification/seed_identification.py 
 
 (b) go to line 102-103 and comment the following line:
+
 if(seed_homogeneity > max(cell_homogeneities) and seed_homogeneity > delta):
+
     seed_positions[index_i,index_j] = 1;
     
 (c) simply replace with: 
+
 seed_positions[index_i,index_j] = 1;
 
 In this way all grid cells will be assigned to a domain. Note: the algorithm will be way slower, so do this with a relatively low resolution (e.g., 180x30 points would take x minutes) (Fab: insert x when you have it).
