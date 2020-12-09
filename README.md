@@ -98,6 +98,7 @@ Inputs in the configs/sample_config.json
 
 (l) q: FDR parameter to test the significance of the lag-correlations (e.g., q = 0.05 implies that (on average) only 5% of the links identified is expected to be a false positive).
 
+<!--
 ## ----------------- OBSERVATION/NEW FEATURE -----------------
 
 The starting point for the domain identification step is the selection of cores. We say that a cell "i" is a core if its local homogeneity (i.e., average pairwise correlation between time series in the K-neighborhood of i, i included) is (a) a local maximum in its K-neighborhood and (b) it is greater than the threshold delta. Main reason for this choice is to be able to differentiate between what is noise and significant variability of the system (i.e., dMaps will not include all time series in a domain).
@@ -119,6 +120,8 @@ if(seed_homogeneity > max(cell_homogeneities) and seed_homogeneity > delta):
 seed_positions[index_i,index_j] = 1;
 
 In this way all grid cells will be assigned to a domain. Note: the algorithm will be WAY slower, so do this with a relatively low resolution (e.g., 180x30 points would take x minutes) (Fab: insert x when you have it).
+
+-->
 
 # (v) OUTPUTS 
 
