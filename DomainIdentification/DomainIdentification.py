@@ -218,76 +218,79 @@ class DomainIdentification(object):
 			is_expanded: (boolean) True if domain is expanded False if not
 		"""
 		is_expanded = False;
+		
+		while(True):
 
-		##generate a set that will have all grid cell ids that are
-		##already inside the domain
-		domain_grid_cells = set();
-		for grid_cell_id, grid_cell in domain.grid_cells.items():
-			domain_grid_cells.add(grid_cell);
+			##generate a set that will have all grid cell ids that are
+			##already inside the domain
+			domain_grid_cells = set();
+			for grid_cell_id, grid_cell in domain.grid_cells.items():
+				domain_grid_cells.add(grid_cell);
 
-		##set that will hold all candidate grid cells.
-		candidate_grid_cells = set(); ##list with GridCell objects
+			##set that will hold all candidate grid cells.
+			candidate_grid_cells = set(); ##list with GridCell objects
 
-		##get candidate grid cells for expansion
-		for grid_cell_id, grid_cell in domain.grid_cells.items():
-			##for each grid cell get its k=8 nearest neighbors
-			coords = np.expand_dims(np.asarray([grid_cell.lat,grid_cell.lon]),0);
-			_,k_neighborhood_indices = self.nearest_neighbors.kneighbors(coords,n_neighbors=8+1);
-			k_neighborhood_indices = k_neighborhood_indices[0];
-			##remoove self
-			k_neighborhood_indices = k_neighborhood_indices[1:];
+			##get candidate grid cells for expansion
+			for grid_cell_id, grid_cell in domain.grid_cells.items():
+				##for each grid cell get its k=8 nearest neighbors
+				coords = np.expand_dims(np.asarray([grid_cell.lat,grid_cell.lon]),0);
+				_,k_neighborhood_indices = self.nearest_neighbors.kneighbors(coords,n_neighbors=8+1);
+				k_neighborhood_indices = k_neighborhood_indices[0];
+				##remoove self
+				k_neighborhood_indices = k_neighborhood_indices[1:];
 
-			for k_index in k_neighborhood_indices:
-				neigh_indices = self.indices[k_index]; ##x,y index of neighboring grid cell
-				##get the corresponding grid cell
-				try:
-					##neighboring grid cell id
-					neigh_grid_cell_id = self.pos_to_grid_cell_id[str(neigh_indices[0])+","+str(neigh_indices[1])];
-					candidate_grid_cell = self.grid_cells[neigh_grid_cell_id];
-					if(candidate_grid_cell not in domain_grid_cells): ##grid cell not in domain = grid cell in border
-						candidate_grid_cells.add(candidate_grid_cell);
-				except KeyError:
-					pass; ##grid cell in land
+				for k_index in k_neighborhood_indices:
+					neigh_indices = self.indices[k_index]; ##x,y index of neighboring grid cell
+					##get the corresponding grid cell
+					try:
+						##neighboring grid cell id
+						neigh_grid_cell_id = self.pos_to_grid_cell_id[str(neigh_indices[0])+","+str(neigh_indices[1])];
+						candidate_grid_cell = self.grid_cells[neigh_grid_cell_id];
+						if(candidate_grid_cell not in domain_grid_cells): ##grid cell not in domain = grid cell in border
+							candidate_grid_cells.add(candidate_grid_cell);
+					except KeyError:
+						pass; ##grid cell in land
 
-		##compute average  correlation between each candidate
-		##grid cell and grid cells inside the domain
+			##compute average  correlation between each candidate
+			##grid cell and grid cells inside the domain
 
-		##check number 1. do we have any candidate grid cells
-		if(len(candidate_grid_cells) == 0):
-			return domain, is_expanded;
+			##check number 1. do we have any candidate grid cells
+			if(len(candidate_grid_cells) == 0):
+				return domain, is_expanded;
 
-		for candidate_grid_cell in candidate_grid_cells:
-			candidate_grid_cell_ts = self.data[:,candidate_grid_cell.index[0],candidate_grid_cell.index[1]];
-			score = 0.;
+			for candidate_grid_cell in candidate_grid_cells:
+				candidate_grid_cell_ts = self.data[:,candidate_grid_cell.index[0],candidate_grid_cell.index[1]];
+				score = 0.;
 
-			for domain_grid_cell in domain_grid_cells:
-				domain_grid_cell_ts = self.data[:,domain_grid_cell.index[0],domain_grid_cell.index[1]];
-				correlation = lagged_correlation(candidate_grid_cell_ts, domain_grid_cell_ts,
-													tau=0,normed=True);
-				score += correlation;
-			score = score/len(domain_grid_cells);
-			candidate_grid_cell.score = score;
+				for domain_grid_cell in domain_grid_cells:
+					domain_grid_cell_ts = self.data[:,domain_grid_cell.index[0],domain_grid_cell.index[1]];
+					correlation = lagged_correlation(candidate_grid_cell_ts, domain_grid_cell_ts,
+														tau=0,normed=True);
+					score += correlation;
+				score = score/len(domain_grid_cells);
+				candidate_grid_cell.score = score;
 
 
-		##sort grid cells by score in descending order.
-		candidate_grid_cells = list(candidate_grid_cells);
-		candidate_grid_cells.sort(key=lambda x: x.score, reverse=True);
+			##sort grid cells by score in descending order.
+			candidate_grid_cells = list(candidate_grid_cells);
+			candidate_grid_cells.sort(key=lambda x: x.score, reverse=True);
 
-		##get the best candidate
-		best_candidate = candidate_grid_cells[0];
-		if(best_candidate.score > self.delta): ##then add the grid cell
-			##update domain homogeneity
-			domain_pairs = len(domain.grid_cells)*(len(domain.grid_cells)-1)/2.
-			current_homogeneity = domain.homogeneity*domain_pairs;
-			bc_score = best_candidate.score*len(domain.grid_cells);
-			domain.homogeneity = (bc_score+current_homogeneity)/(len(domain.grid_cells)*(len(domain.grid_cells)+1)/2.);
-			domain.grid_cells[best_candidate.id] = best_candidate;
-			##update domain map
-			domain.map[best_candidate.index[0], best_candidate.index[1]] = 1;
-			is_expanded = True;
-			return domain, is_expanded;
-		else: ##this domain can not be expanded
-			return domain, is_expanded;
+			##get the best candidate
+			best_candidate = candidate_grid_cells[0];
+			if(best_candidate.score > self.delta): ##then add the grid cell
+				##update domain homogeneity
+				domain_pairs = len(domain.grid_cells)*(len(domain.grid_cells)-1)/2.
+				current_homogeneity = domain.homogeneity*domain_pairs;
+				bc_score = best_candidate.score*len(domain.grid_cells);
+				domain.homogeneity = (bc_score+current_homogeneity)/(len(domain.grid_cells)*(len(domain.grid_cells)+1)/2.);
+				domain.grid_cells[best_candidate.id] = best_candidate;
+				##update domain map
+				domain.map[best_candidate.index[0], best_candidate.index[1]] = 1;
+				is_expanded = True;
+				return domain, is_expanded;
+			else: ##this domain can not be expanded
+				break;
+		return domain, is_expanded;
 
 
 	def domain_initialization(self):
