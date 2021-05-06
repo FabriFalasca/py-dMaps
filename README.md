@@ -218,7 +218,7 @@ Note:
 
 # (vii) Updates
 
-Modified the Domain Identification algorithm. In DomainIdentification folder you find 2 files DomainIdentification_old.py (old identifier) and DomainIdentification.py (new). The main difference is the following: in the original d-Maps paper we identify domains by (a) expanding a cell and (b) immediately asking if there are domains that can be merged or not after every single expansion. Now, in DomainIdentification.py we let a domain expand cell by cell until the constraints for expansion are not statisfied anymore. At that point we ask for merging. We saw that we SST datasets this gives us more reasonable and robust results. The main qualitative picture is independent on the chosen method.
+May 2021. Modified the Domain Identification algorithm. In DomainIdentification folder you find 2 files DomainIdentification_old.py (old identifier) and DomainIdentification.py (new). The main difference is the following: in the original d-Maps paper we identify domains by (a) expanding a cell and (b) immediately asking if there are domains that can be merged or not after every single expansion. Now, in DomainIdentification.py we let a domain expand cell by cell until the constraints for expansion are not statisfied anymore. At that point we ask for merging. We saw that for SST datasets this gives us more reasonable and robust results. The main qualitative picture is independent on the chosen method.
 
 # (viii) PUBLICATIONS 
 
