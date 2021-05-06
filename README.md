@@ -18,7 +18,9 @@ Fabrizio Falasca (fabrifalasca@gmail.com) and Ilias Fountalis (Foudalisi@hotmail
 
 (vi) Tutorials
 
-(vii) Publications
+(vii) Updates
+
+(viii) Publications
 
 # (i) Required Python packages
 
@@ -214,8 +216,11 @@ Note:
 
 - How you choose the parameters is domain' specific. A general starting point is K = 8, alpha = 0.01 and FDR parameter q = 0.05.
 
+# (vii) Updates
 
-# (vii) PUBLICATIONS 
+Modified the Domain Identification algorithm. In DomainIdentification folder you find 2 files DomainIdentification_old.py (old identifier) and DomainIdentification.py (new). The main difference is the following: in the original d-Maps paper we identify domains by (a) expanding a cell and (b) immediately asking if there are domains that can be merged or not after every single expansion. Now, in DomainIdentification.py we let a domain expand cell by cell until the constraints for expansion are not statisfied anymore. At that point we ask for merging. We saw that we SST datasets this gives us more reasonable and robust results. The main qualitative picture is independent on the chosen method.
+
+# (viii) PUBLICATIONS 
 
 I. Fountalis, C. Dovrolis, A. Bracco, B. Dilkina, and S. Keilholz.δ-MAPS from spatio-temporal data to a weighted and lagged network between functional domain.Appl. Netw. Sci., 3:21, 2018.
 
