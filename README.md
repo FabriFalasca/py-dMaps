@@ -206,11 +206,13 @@ Output of domains identification and network inference for COBEv2 reanalysis. Gl
 Output of domains identification and network inference for ERA-Interim reanalysis. Outgoing Longwave Radiation (OLR) from 1980 to 2019. Temporal resolution: 1 month. Number of grid points: 100x150. 
 
 Note: 
-- For the COBEv2 dataset, the "true" number of grid points is almost 1/2 of 180x60 as we are focusing on SST and the land is masked. With such number of grid points the code run in ~700 seconds.
-- The time complexity scales exponential with the resolution. When we analyze the OLR dataset, we have 100x150 grid points (no mask) and it took ~333461 seconds.
+- For the COBEv2 dataset, the "true" number of grid points is almost 1/2 of 180x60 as we are focusing on SST and the land is masked. 
+- The time complexity scales exponential with the resolution. When we analyze the OLR dataset, we have 100x150 grid points (no mask).
 - Domains can overlap: when we plot the domains and strength maps in the tutorial it is not possible to see the overlapping. A way to show it is to plot also the domains borders (we will do it soon).
 - Main point: d-MAPS tries to discover large (constrained to your data) scale modes of variability. Find the "minimum" resolution that take into account of the processes you are interested in and use that. E.g., if your interested is in discovering modes at global scale in SST a resolution of 2 by 2 degrees is probably enough for a good qualitative answer (going to 0.5 by 0.5 degrees would make things exponentially slower and you are probably going to find similar large-scale answers). 
 - As the files.nc are > 25MB, we couldn't upload them in this github repository.
+
+- How you choose the parameters is domain' specific. A general starting point is K = 8, alpha = 0.01 and FDR parameter q = 0.05.
 
 
 # (vii) PUBLICATIONS 
