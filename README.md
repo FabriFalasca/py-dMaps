@@ -231,3 +231,5 @@ Falasca,F., Bracco, A., Nenes, A., and Fountalis, I. (2019).  Dimensionality red
 Falasca,F., Crétat, J., Braconnot, and Bracco, A. Spatiotemporal complexity and time-dependent networks in sea surface temperature from mid- to late Holocene. Eur. Phys. J.Plus 135:392 (2020). https://doi.org/10.1140/epjp/s13360-020-00403-x
 (free version here: https://www.researchgate.net/publication/341107349_Spatiotemporal_complexity_and_time-dependent_networks_in_sea_surface_temperature_from_mid-_to_late_Holocene)
 
+Novi, L., Bracco, A. & Falasca, F. Uncovering marine connectivity through sea surface temperature. Sci Rep 11, 8839 (2021). https://doi.org/10.1038/s41598-021-87711-z
+
