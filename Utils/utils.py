@@ -109,3 +109,87 @@ def estimate_delta(data, rand_samples, alpha):
     delta = np.mean(significant_correlations);
 
     return delta;
+
+
+# Additional functions for domains merging: sometimes useful after running
+# the main domain identification algorithm.
+# Written by Lucile Ricard (lucile.ricard@epfl.ch)
+
+def sort_all (dom_ids, dom_maps, dom_strength) :
+    sort_inds = np.argsort(dom_strength[:,1])
+    #Descending order
+    sort_inds = np.flip(sort_inds)
+    #Sort
+    sort_dom_strength = dom_strength[sort_inds]
+    sort_dom_ids = dom_ids[sort_inds]
+    sort_dom_maps = dom_maps[sort_inds]
+    return sort_inds, sort_dom_ids, sort_dom_maps, sort_dom_strength
+
+def sort_domains (dom_ids, dom_maps) :
+    d_sizes = []
+    for d in dom_maps :
+        size = list(d.flatten()).count(1)
+        d_sizes.append(size)
+    d_sizes = np.array(d_sizes)
+    #Sort the domain maps by domain sizes
+    inds = np.argsort(d_sizes)
+    #In descending order
+    inds = np.flip(inds)
+    #Sort
+    sort_d_sizes = d_sizes[inds]
+    sort_dom_ids = dom_ids[inds]
+    sort_dom_maps = dom_maps[inds]
+    return inds, sort_d_sizes, sort_dom_ids, sort_dom_maps
+
+def test(d1,d2):
+    ind1 = np.argwhere(d1 == 1)
+    ind2 = np.argwhere(d2 == 1)
+    N1 = ind1.shape[0]
+    N2 = ind2.shape[0]
+    compteur = 0
+    for indices in (ind1) :
+        i1 = indices[0]
+        i2 = indices[1]
+        location = np.argwhere(i1 == ind2[:,0])
+        if i2 in ind2[location,1] :
+            compteur += 1
+    if (compteur >= 0.7*N1) & (compteur >= 0.7*N2):
+        print('At least 70% of d1 grid cells are d2 grid cells')
+        return True
+    else :
+        return False
+
+def compute_liste (dom_maps) :
+    liste = []
+    N, dimx, dimy = dom_maps.shape
+    for i in range(N) :
+        # print('i=', i)
+        dmap1 = dom_maps [i,]
+        #Read other domain maps still in descending order
+        for j in range (i+1,N) :
+            # print('j =', j)
+            dmap2 = dom_maps[j]
+            if test (dmap1,dmap2) == True :
+                print('Indices of domain maps to merge = %s and %s' %(i,j))
+                liste.append((i,j))
+    liste = np.array(liste)
+    print(liste)
+    return liste
+
+def to_merge (liste, dom_maps, k):
+    new_dom_maps = np.copy(dom_maps)
+    try :
+        i,j = liste [0][0], liste[0][1]
+    except :
+        print('Empty list. No domains to merge anymore.')
+        k +=1
+        return new_dom_maps, k
+    dmap1 = new_dom_maps[i,]
+    dmap2 = new_dom_maps[j,]
+    #Take all the 1 from the tow domain maps to merge
+    dmap_merged = np.maximum(dmap1, dmap2)
+    #Replace the strongest domain map by the merged domain map
+    new_dom_maps[i,] = dmap_merged
+    #Suppress the other domain map
+    new_dom_maps = np.delete(new_dom_maps,j,axis = 0) #length = length -1
+    return new_dom_maps, k
