@@ -24,34 +24,36 @@ import time
 
 start = time.time()
 
-def load_data(path_to_data, climate_variable, latitude_string, longitude_string):
-	"""
-	Loads a netcdf file containing the 3D grid
-	Input:
-		path_to_data: (String) path to .nc file
-		climate_variable: (String) the name of the climate variable one wants to extract from the .nc file
-		latitude_string: (String) the name of the latitude variable in the .nc file
-		longitude_string: (String) the name of the longitude variable in the .nc file
-	Returns:
-		climate_field: numpy masked array of dimensions time,lat,lon
-		latitudes: numpy masked array of dimension X, where X is the latitude of the dataset
-		longitudes: numpy masked array of dimension X, where X is the longitude of the dataset
-	"""
-	nc_fid = Dataset(path_to_data, 'r');
-	climate_field = nc_fid.variables[climate_variable][:];
-	latitudes = nc_fid.variables[latitude_string][:];
-	longitudes = nc_fid.variables[longitude_string][:];
 
-	return climate_field, latitudes, longitudes;
+def load_data(path_to_data, climate_variable, latitude_string, longitude_string):
+    """
+    Loads a netcdf file containing the 3D grid
+    Input:
+            path_to_data: (String) path to .nc file
+            climate_variable: (String) the name of the climate variable one wants to extract from the .nc file
+            latitude_string: (String) the name of the latitude variable in the .nc file
+            longitude_string: (String) the name of the longitude variable in the .nc file
+    Returns:
+            climate_field: numpy masked array of dimensions time,lat,lon
+            latitudes: numpy masked array of dimension X, where X is the latitude of the dataset
+            longitudes: numpy masked array of dimension X, where X is the longitude of the dataset
+    """
+    nc_fid = Dataset(path_to_data, 'r')
+    climate_field = nc_fid.variables[climate_variable][:]
+    latitudes = nc_fid.variables[latitude_string][:]
+    longitudes = nc_fid.variables[longitude_string][:]
+
+    return climate_field, latitudes, longitudes
 
 
 def load_config(path_to_config_file):
-	"""
-	loads the configuration file
-	"""
-	with open(path_to_config_file) as f:
-		config = json.load(f);
-	return config;
+    """
+    loads the configuration file
+    """
+    with open(path_to_config_file) as f:
+        config = json.load(f)
+    return config
+
 
 '''
 def plot_domain_map(domains):
@@ -64,111 +66,156 @@ def plot_domain_map(domains):
     plt.savefig('domain_map');
 '''
 
+
 def init_directories(output_dir):
 
-	if(output_dir[-1] != '/'):
-		output_dir += '/';
+    if(output_dir[-1] != '/'):
+        output_dir += '/'
 
-	if(os.path.exists(output_dir)):
-		shutil.rmtree(output_dir);
-	os.mkdir(output_dir);
+    if(os.path.exists(output_dir)):
+        shutil.rmtree(output_dir)
+    os.mkdir(output_dir)
 
-	seed_results_dir = output_dir + "seed_identification/";
-	domain_results_dir = output_dir + "domain_identification/";
-	network_results_dir = output_dir + "network_inference/";
+    seed_results_dir = output_dir + "seed_identification/"
+    domain_results_dir = output_dir + "domain_identification/"
+    network_results_dir = output_dir + "network_inference/"
 
-	os.mkdir(seed_results_dir);
-	os.mkdir(domain_results_dir);
-	os.mkdir(network_results_dir);
+    os.mkdir(seed_results_dir)
+    os.mkdir(domain_results_dir)
+    os.mkdir(network_results_dir)
 
-	return seed_results_dir, domain_results_dir, network_results_dir;
+    return seed_results_dir, domain_results_dir, network_results_dir
+
 
 if __name__ == "__main__":
 
-	argparser = argparse.ArgumentParser();
-	argparser.add_argument("-i","--input",required=True, help = "Path to .json config file");
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument("-i", "--input", required=True,
+                           help="Path to .json config file")
 
-	args = vars(argparser.parse_args());
-	##load config file
-	config = load_config(args["input"]);
+    args = vars(argparser.parse_args())
+    # load config file
+    config = load_config(args["input"])
 
-	##init output directory and directories to save results
-	seed_results_dir, domain_results_dir, network_results_dir = init_directories(config["output_directory"]);
+    # init output directory and directories to save results
+    seed_results_dir, domain_results_dir, network_results_dir = init_directories(
+        config["output_directory"])
 
-	##convert this to user input when done
-	path_to_data = config["path_to_data"];
+    # convert this to user input when done
+    path_to_data = config["path_to_data"]
 
-	##number of random samples to use when estimating delta
-	delta_rand_samples = config["delta_rand_samples"];
-	##significance threshold for delta
-	alpha = config["alpha"];
-	##number of neighbors in the local homogeneity field
-	k = config["k"];
+    # number of random samples to use when estimating delta
+    delta_rand_samples = config["delta_rand_samples"]
+    # significance threshold for delta
+    alpha = config["alpha"]
+    # number of neighbors in the local homogeneity field
+    k = config["k"]
 
-	##load data for domain identification
-	data,latitudes,longitudes = load_data(path_to_data, config["variable_name"],
-										config["latitude_name"],config["longitude_name"]);
+    # load data for domain identification
+    data, latitudes, longitudes = load_data(path_to_data, config["variable_name"],
+                                            config["latitude_name"], config["longitude_name"])
 
-	##normalize time series to zero mean and unit variance
-	data = remove_mean(data);
-	data = remove_variance(data);
+    # normalize time series to zero mean and unit variance
+    data = remove_mean(data)
+    data = remove_variance(data)
 
-	##convert data to a numpy array where masked values are set to NaN
-	data = utils.masked_array_to_numpy(data);
+    # convert data to a numpy array where masked values are set to NaN
+    data = utils.masked_array_to_numpy(data)
 
-	##estimate delta
-	print('Estimating delta');
-	delta = utils.estimate_delta(data, delta_rand_samples, alpha);
-	print('Delta estimate: '+str(delta));
+    # estimate delta
+    print('Estimating delta')
+    #delta = utils.estimate_delta(data, delta_rand_samples, alpha);
+    delta = 0.527781381582588
+    print('Delta estimate: '+str(delta))
 
-	##step 1. seed identification
-	local_homogeneity_field, seed_positions = seed_identification(data,latitudes.data,
-																longitudes.data,
-																delta, k);
-	np.save(seed_results_dir+"local_homogeneity_field",local_homogeneity_field);
-	np.save(seed_results_dir+"seed_positions",seed_positions);
+    # step 1. seed identification
+    local_homogeneity_field, seed_positions = seed_identification(data, latitudes.data,
+                                                                  longitudes.data,
+                                                                  delta, k)
+    np.save(seed_results_dir+"local_homogeneity_field", local_homogeneity_field)
+    np.save(seed_results_dir+"seed_positions", seed_positions)
 
-	##step 2. domain identification
-	print('Domain identification started')
-	domain_identifier = DomainIdentification(data, latitudes, longitudes, seed_positions,
-												k, delta, domain_results_dir);
-	domain_identifier.domain_identification();
-	domains = domain_identifier.domains;
-	#domain_identifier.dump_output();
+    # step 2. domain identification
+    print('Domain identification started')
+    domain_identifier = DomainIdentification(data, latitudes, longitudes, seed_positions,
+                                             k, delta, domain_results_dir)
+    domain_identifier.domain_identification()
+    domains = domain_identifier.domains
+    # domain_identifier.dump_output();
 
-	## From the domains object let's retrieve the domains maps and ids
-	# How many domains
-	length_dom = len(domains)
+    # From the domains object let's retrieve the domains maps and ids
+    # How many domains
+    length_dom = len(domains)
 
-	# Let's retrieve the domains' maps and ids
-	dom_maps = []
-	dom_ids = []
-	for i in range(length_dom):
-		dom_maps.append(domains[i].map)
-		dom_ids.append(domains[i].domain_id)
-	dom_maps = np.array(dom_maps)
-	dom_ids = np.array(dom_ids)
-	# Save them in the output folder
-	np.save(domain_results_dir+"domain_maps",dom_maps);
-	np.save(domain_results_dir+"domain_ids",dom_ids);
+    # Let's retrieve the domains' maps and ids
+    dom_maps = []
+    dom_ids = []
+    for i in range(length_dom):
+        dom_maps.append(domains[i].map)
+        dom_ids.append(domains[i].domain_id)
+    dom_maps = np.array(dom_maps)
+    dom_ids = np.array(dom_ids)
 
-	print('Done')
+    print('Done with domain identification')
 
-	## step 3. network inference
-	##load data again for network inference
-	data,latitudes,longitudes = load_data(path_to_data, config["variable_name"],
-										config["latitude_name"],config["longitude_name"]);
+    '''
+    With very high values of delta (very low alpha) we see (a) lots of domains
+    and (b) many domains start overlapping even when occupying very similar regions.
+    To simplify analyses and interpretations we ask that, after the domain identification
+    is done, two domains should be merged if they have more than 70% percent of cells in common.
+    This happens few times in our data and this heuristic helps furher reeducting the
+    complexity of the data
 
-	print('')
-	print('Network inference started')
-	## Infer the netork
-	network_list, strength_list, strength_map = net_inference(dom_maps, dom_ids, data, latitudes,longitudes, config["tau_max"], config["q"])
-	print('Done')
-	print('')
-	print('Saving the outputs')
-	np.save(network_results_dir+"network_list",network_list);
-	np.save(network_results_dir+"strength_list",strength_list);
-	np.save(network_results_dir+"strength_map",strength_map);
+    The following function has been written by Lucile Ricard (lucile.ricard@epfl.ch)
+    '''
 
-	end = time.time()
-	print('Finished in '+str(round(end - start,2))+' seconds')
+    print('Additional merging of 2 domains IF they share more than 70% of the cells')
+
+    #Domain maps sorted in function of their domain size (descending order)
+    sort_inds, sort_d_sizes, sort_d_ids, sort_d_maps = utils.sort_domains (dom_ids, dom_maps)
+
+    #d_maps_save =  np.copy(sort_d_maps)
+    N, dimx, dimy = sort_d_maps.shape
+    #print('N at 0 iteration = %s' %(N)
+
+    #Merging
+    k = 0 #to break the loop when no domains to merge anymore
+    iteration = 0
+    while not k > 0 :
+        iteration += 1
+        liste_init = utils.compute_liste (sort_d_maps)
+        sort_d_maps, k = utils.to_merge (liste_init,sort_d_maps, k)
+        N, dimx, dimy = sort_d_maps.shape
+        #print('N at %s iteration = %s' %(iteration, N))
+
+    dom_maps = sort_d_maps
+    # number of domains
+    N = np.shape(dom_maps)[0]
+    # The new domain ids are simply the first N ids
+    dom_ids = sort_d_ids[0:N]
+
+    # Save them in the output folder
+    np.save(domain_results_dir+"domain_maps", dom_maps)
+    np.save(domain_results_dir+"domain_ids", dom_ids)
+
+    print('Done')
+
+    # step 3. network inference
+    # load data again for network inference
+    data, latitudes, longitudes = load_data(path_to_data, config["variable_name"],
+                                            config["latitude_name"], config["longitude_name"])
+
+    print('')
+    print('Network inference started')
+    # Infer the netork
+    network_list, strength_list, strength_map = net_inference(
+        dom_maps, dom_ids, data, latitudes, longitudes, config["tau_max"], config["q"])
+    print('Done')
+    print('')
+    print('Saving the outputs')
+    np.save(network_results_dir+"network_list", network_list)
+    np.save(network_results_dir+"strength_list", strength_list)
+    np.save(network_results_dir+"strength_map", strength_map)
+
+    end = time.time()
+    print('Finished in '+str(round(end - start, 2))+' seconds')
