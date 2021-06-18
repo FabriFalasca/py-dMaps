@@ -160,10 +160,10 @@ if __name__ == "__main__":
 
     '''
     With very high values of delta (very low alpha) we see (a) lots of domains
-    and (b) many domains start overlapping even when occupying very similar regions.
+    and (b) few domains may sometimes overlap even when occupying very similar regions.
     To simplify analyses and interpretations we ask that, after the domain identification
     is done, two domains should be merged if they have more than 70% percent of cells in common.
-    This happens few times in our data and this heuristic helps furher reeducting the
+    This happens few times in our data and this heuristic helps furher reducing the
     complexity of the data
 
     The following function has been written by Lucile Ricard (lucile.ricard@epfl.ch)
