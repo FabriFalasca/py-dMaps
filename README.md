@@ -218,9 +218,7 @@ Note:
 
 # (vii) Updates
 
-May 2021. Modified the Domain Identification algorithm. In DomainIdentification folder you find 2 files DomainIdentification_old.py (old identifier) and DomainIdentification.py (new). The main difference is the following: in the original d-Maps paper we identify domains by (a) expanding a cell and (b) immediately asking if there are domains that can be merged or not after every single expansion. Now, in DomainIdentification.py we let a domain expand cell by cell until the constraints for expansion are not statisfied anymore. At that point we ask for merging. We saw that for SST datasets this gives us more reasonable and robust results. The main qualitative picture is independent on the chosen method.
-
-June 2021. As delta gets bigger (parameter alpha is set to small values) we find (a) more domains and (b) sometimes these domains do not merge even if a large chunk of their area overlaps. Point (b) is just a consequence of setting small alpha. In the end of the merging procedure, we relax this constraint by asking to additionally merge domains who share at least 70 percent of the grid cells. Changes in SST are minimal but we found more robustness on the threshold alpha in more complex and noisy fields coming from large Eddy simulations. In case you want to remove this additional step, go into run_delta_maps.py file and comment from line 162 to 195.
+June 2021. As delta gets bigger (parameter alpha is set to small values) we find (a) more domains and (b) sometimes (almost never) these domains do not merge even if a large chunk of their area overlaps. Point (b) is just a consequence of setting small alpha. In the end of the merging procedure, we relax this constraint by asking to additionally merge domains who share at least 70 percent of the grid cells. In case you want to remove this additional step, go into run_delta_maps.py file and comment from line 162 to 195.
 
 # (viii) PUBLICATIONS 
 
