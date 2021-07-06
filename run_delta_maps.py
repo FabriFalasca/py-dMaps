@@ -125,7 +125,6 @@ if __name__ == "__main__":
     # estimate delta
     print('Estimating delta')
     delta = utils.estimate_delta(data, delta_rand_samples, alpha);
-    #delta = 0.527781381582588
     print('Delta estimate: '+str(delta))
 
     # step 1. seed identification
