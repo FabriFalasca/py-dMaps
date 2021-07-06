@@ -203,7 +203,7 @@ Here you will find tutorials on how to analyze the data.
 
 Output of domains identification and network inference for COBEv2 reanalysis. Global sea surface temperature (SST) from January 1980 to December 2015. Temporal resolution: 1 month. Number of grid points: 180x60 (2 by 2 degree with no High lats). 
 
-It took 4843.15 seconds to complete the run.
+It took 4843.15 seconds to complete the run (domain identification + network inference).
 
 Note: 
 - For the COBEv2 dataset, the "true" number of grid points is almost 1/2 of 180x60 as we are focusing on SST and the land is masked. 
