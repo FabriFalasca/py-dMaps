@@ -186,11 +186,11 @@ def net_inference_FDR(signals,ids,tau_max,q):
     print('# of time steps: T = '+str(T))
     for i in range(N):
         ts1 = normed_ts[i]
+        correlogram_ts1 = get_correlogram(ts1,ts1,T-1,normed=True);
         for j in range(i+1,N):
             ts2 = normed_ts[j]
-            # Compute the numerator of the Bartlett variance
-            correlogram_ts1 = get_correlogram(ts1,ts1,T-1,normed=True);
             correlogram_ts2 = get_correlogram(ts2,ts2,T-1,normed=True);
+            # Compute the numerator of the Bartlett variance
             b_variance = np.sum(np.multiply(correlogram_ts1,correlogram_ts2));
 
             # Compute the Bartlett variance at lag tau
