@@ -197,7 +197,7 @@ def net_inference_FDR(signals,ids,tau_max,q):
             # Compute the Bartlett variance at lag tau
             #for tau in np.arange(-tau_max,tau_max+1,1):
             #    bartlett.append(b_variance/(T-tau))
-            bartlett.append(b_variance/b_variance_denominator)    
+            bartlett.append(b_variance_num/b_variance_denominator)    
 
     bartlett = np.array(bartlett)
     # if there are small negative numbers set it to an insignificant random value
