@@ -119,8 +119,7 @@ def get_correlogram(ts1,ts2,tau_range,normed=False):
         correlogram.append(lagged_correlation(ts1,ts2,tau,normed));
     return correlogram;
 
-# Bartlett variance at lat tau
-def bartlett_variance_tau(ts1,ts2,tau,normed=False):
+def bartlett_variance(ts1,ts2,normed=False):
 
     assert len(ts1) == len(ts2);
     T = len(ts1);
@@ -128,11 +127,26 @@ def bartlett_variance_tau(ts1,ts2,tau,normed=False):
     correlogram_ts1 = get_correlogram(ts1,ts1,T-1,normed);
     correlogram_ts2 = get_correlogram(ts2,ts2,T-1,normed);
 
-    var = np.sum(np.multiply(correlogram_ts1,correlogram_ts2))/(T-tau);
+    var = np.sum(np.multiply(correlogram_ts1,correlogram_ts2))/T;
     # set to zero (small) negative numbers
     if(var <= 0):
         var = np.random.uniform(0, 0.000001)
     return var;
+
+# Bartlett variance at lat tau
+#def bartlett_variance_tau(ts1,ts2,tau,normed=False):
+
+#    assert len(ts1) == len(ts2);
+#    T = len(ts1);
+    ##get the correlogram of the two time series
+#    correlogram_ts1 = get_correlogram(ts1,ts1,T-1,normed);
+#    correlogram_ts2 = get_correlogram(ts2,ts2,T-1,normed);
+
+#    var = np.sum(np.multiply(correlogram_ts1,correlogram_ts2))/(T-tau);
+    # set to zero (small) negative numbers
+#    if(var <= 0):
+#        var = np.random.uniform(0, 0.000001)
+#    return var;
 
 # Network inference using FDR
 def net_inference_FDR(signals,ids,tau_max,q):
@@ -154,7 +168,8 @@ def net_inference_FDR(signals,ids,tau_max,q):
 
     # mean(normed_ts[i]) = 0 && std(normed_ts[i]) = 1 for all i
     normed_ts = (signals.T/np.std(signals,axis=1)).T
-
+    print('')
+    print('Computing all pairwise correlograms')
     ## Compute the correlograms for each unique pair
     correlograms = []
     for i in range(N):
@@ -164,37 +179,52 @@ def net_inference_FDR(signals,ids,tau_max,q):
             correlograms.append(get_correlogram(ts1,ts2,tau_max,normed=True))
 
     correlograms = np.asarray(correlograms)
-
+    print('')
+    print('Computing all pairwise covariances')
     ## Compute the lag covariances for each unique pair
     covariances = []
     for i in range(N):
         ts1 = signals[i]
         for j in range(i+1,N):
             ts2 = signals[j]
-            covariances.append(get_covariances(ts1,ts2,tau_max,normed=True))
+            covariances.append(get_covariances(ts1,ts2,tau_max,normed=False))
 
     covariances = np.asarray(covariances)
-
+    print('Compute Bartlett variance for each pair of time series')
     ## We want the Bartlett's variance for each unique pair of time series
     bartlett = np.zeros([int(N*(N-1)/2),int(2*tau_max+1)])
     k1 = 0
+    # Length of each time series (they all have the same length)
+    T = len(normed_ts[0])
+    print(str(T))
     for i in range(N):
         ts1 = normed_ts[i]
         for j in range(i+1,N):
             ts2 = normed_ts[j]
             k2 = 0
+            # Compute the numerator of the Bartlett variance
+            correlogram_ts1 = get_correlogram(ts1,ts1,T-1,normed=True);
+            correlogram_ts2 = get_correlogram(ts2,ts2,T-1,normed=True);
+            bartlett[k1,k2] = np.sum(np.multiply(correlogram_ts1,correlogram_ts2));
+
+            # Compute the Bartlett variance at lag tau
             for tau in np.arange(-tau_max,tau_max+1,1):
-                bartlett[k1,k2] = bartlett_variance_tau(ts1,ts2,tau,normed=True)
+                bartlett[k1,k2] = bartlett[k1,k2]/(T-tau)
+                # set to zero (small) negative numbers
+                if(bartlett[k1,k2] <= 0):
+                    bartlett[k1,k2] = np.random.uniform(0, 0.000001)
                 k2 += 1
             k1 += 1
 
     ## Compute the z score for every correlation
-
+    print('')
+    print('Compute z-score for each pairwise correlation')
     # By taking the absolute value of the correlations is like doing a 2 - tailed t-test
     abs_correlograms = np.abs(correlograms)
     bartlett_std = np.sqrt(bartlett)
     z_scores = abs_correlograms/bartlett_std
 
+    print('Compute all p-values')
     # Compute all p-values for each connection
     p_vals = np.zeros([int(N*(N-1)/2),int(2*tau_max+1)])
 
@@ -202,8 +232,10 @@ def net_inference_FDR(signals,ids,tau_max,q):
         for j in range(np.shape(z_scores)[1]):
             ##one sided t-test
             p_vals[i,j] = 1 - scipy.stats.norm(0,1).cdf(z_scores[i,j]);
-
     # Compute p_min
+    print('Shape of p values matrix: '+str(np.shape(p_vals)))
+
+    print('FDR')
 
     # Step (a)
     # flatten all p_values and sort them in descending order
@@ -244,24 +276,30 @@ def net_inference_FDR(signals,ids,tau_max,q):
     network = edge_inference(tau_max,correlograms,covariances,bartlett_std,pairs)
 
     # Compute the strengths
+    # strengths are here defined given the covariances and correlations
     indices_net = np.array(network)[:,0:2]
     strength_list = []
+    strength_list_correlations = []
     for i in range(len(ids)):
 
         # id considered
         id_domain = ids[i]
         if len(np.where(indices_net==ids[i])[0]) == 0:
             strength_list.append([id_domain,0])
+            strength_list_correlations.append([id_domain,0])
         else:
             # Positions of the index in the net
             pos = np.where(indices_net==ids[i])[0]
             # Initialize a sublist where we hold the weights associated to each connections
             sublists = []
+            sublists_corr = []
             for j in range(len(pos)):
                 sublists.append(network[pos[j]][6]) # the weight is entry 6 in the network array
+                sublists_corr.append(network[pos[j]][5])
             strength_list.append([id_domain,np.sum(np.abs(sublists))])
+            strength_list_correlations.append([id_domain,np.sum(np.abs(sublists_corr))])
 
-    return network, strength_list
+    return network, strength_list, strength_list_correlations
 
 # Function for the edge inference
 def edge_inference(tau_max,corr_matrix,cov_matrix,bartlett_std_matrix,domains_pair):
