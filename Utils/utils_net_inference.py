@@ -172,34 +172,41 @@ def net_inference_FDR(signals,ids,tau_max,q):
         ts1 = signals[i]
         for j in range(i+1,N):
             ts2 = signals[j]
-            covariances.append(get_covariances(ts1,ts2,tau_max,normed=False))
+            covariances.append(get_covariances(ts1,ts2,tau_max,normed=True))
 
     covariances = np.asarray(covariances)
+    
+    print('')
     print('Compute Bartlett variance for each pair of time series')
     ## We want the Bartlett's variance for each unique pair of time series
-    bartlett = np.zeros([int(N*(N-1)/2),int(2*tau_max+1)])
-    k1 = 0
+    bartlett = []
     # Length of each time series (they all have the same length)
     T = len(normed_ts[0])
-    print(str(T))
+    print('')
+    print('# of time steps: T = '+str(T))
     for i in range(N):
         ts1 = normed_ts[i]
         for j in range(i+1,N):
             ts2 = normed_ts[j]
-            k2 = 0
             # Compute the numerator of the Bartlett variance
             correlogram_ts1 = get_correlogram(ts1,ts1,T-1,normed=True);
             correlogram_ts2 = get_correlogram(ts2,ts2,T-1,normed=True);
-            bartlett[k1,k2] = np.sum(np.multiply(correlogram_ts1,correlogram_ts2));
+            b_variance = np.sum(np.multiply(correlogram_ts1,correlogram_ts2));
 
             # Compute the Bartlett variance at lag tau
             for tau in np.arange(-tau_max,tau_max+1,1):
-                bartlett[k1,k2] = bartlett[k1,k2]/(T-tau)
+                bartlett.append(b_variance/(T-tau))
                 # set to zero (small) negative numbers
-                if(bartlett[k1,k2] <= 0):
-                    bartlett[k1,k2] = np.random.uniform(0, 0.000001)
-                k2 += 1
-            k1 += 1
+                #if(bartlett <= 0):
+                #    bartlett = np.random.uniform(0, 0.000001)
+        if(i%100 == 0):
+            print('Progress: '+str(np.round(i/N,2)));
+
+    bartlett = np.array(bartlett)
+    # if there are small negative numbers set it to zero
+    bartlett[bartlett<=0] = np.random.uniform(0, 0.000001)
+    # We reshape in a matrix with dimensionality + [int(N*(N-1)/2),int(2*tau_max+1)]
+    bartlett = bartlett.reshape(int(N*(N-1)/2),int(2*tau_max+1))
 
     ## Compute the z score for every correlation
     print('')
