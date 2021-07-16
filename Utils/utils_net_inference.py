@@ -133,21 +133,6 @@ def bartlett_variance(ts1,ts2,normed=False):
         var = np.random.uniform(0, 0.000001)
     return var;
 
-# Bartlett variance at lat tau
-#def bartlett_variance_tau(ts1,ts2,tau,normed=False):
-
-#    assert len(ts1) == len(ts2);
-#    T = len(ts1);
-    ##get the correlogram of the two time series
-#    correlogram_ts1 = get_correlogram(ts1,ts1,T-1,normed);
-#    correlogram_ts2 = get_correlogram(ts2,ts2,T-1,normed);
-
-#    var = np.sum(np.multiply(correlogram_ts1,correlogram_ts2))/(T-tau);
-    # set to zero (small) negative numbers
-#    if(var <= 0):
-#        var = np.random.uniform(0, 0.000001)
-#    return var;
-
 # Network inference using FDR
 def net_inference_FDR(signals,ids,tau_max,q):
     # Inputs:
