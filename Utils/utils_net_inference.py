@@ -196,16 +196,11 @@ def net_inference_FDR(signals,ids,tau_max,q):
             # Compute the Bartlett variance at lag tau
             for tau in np.arange(-tau_max,tau_max+1,1):
                 bartlett.append(b_variance/(T-tau))
-                # set to zero (small) negative numbers
-                #if(bartlett <= 0):
-                #    bartlett = np.random.uniform(0, 0.000001)
-        if(i%100 == 0):
-            print('Progress: '+str(np.round(i/N,2)));
 
     bartlett = np.array(bartlett)
-    # if there are small negative numbers set it to zero
+    # if there are small negative numbers set it to an insignificant random value
     bartlett[bartlett<=0] = np.random.uniform(0, 0.000001)
-    # We reshape in a matrix with dimensionality + [int(N*(N-1)/2),int(2*tau_max+1)]
+    # We reshape in a matrix with dimensionality [int(N*(N-1)/2),int(2*tau_max+1)]
     bartlett = bartlett.reshape(int(N*(N-1)/2),int(2*tau_max+1))
 
     ## Compute the z score for every correlation
@@ -218,14 +213,13 @@ def net_inference_FDR(signals,ids,tau_max,q):
 
     print('Compute all p-values')
     # Compute all p-values for each connection
-    p_vals = np.zeros([int(N*(N-1)/2),int(2*tau_max+1)])
-
+    p_vals = []
     for i in range(np.shape(z_scores)[0]):
         for j in range(np.shape(z_scores)[1]):
             ##one sided t-test
-            p_vals[i,j] = 1 - scipy.stats.norm(0,1).cdf(z_scores[i,j]);
-    # Compute p_min
-    print('Shape of p values matrix: '+str(np.shape(p_vals)))
+            p_vals.append(1 - scipy.stats.norm(0,1).cdf(z_scores[i,j]))
+    p_vals = np.array(p_vals)
+    p_vals = p_vals.reshape(int(N*(N-1)/2),int(2*tau_max+1))
 
     print('FDR')
 
