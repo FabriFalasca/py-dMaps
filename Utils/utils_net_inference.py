@@ -287,7 +287,7 @@ def net_inference_FDR(signals,ids,tau_max,q):
             strength_list.append([id_domain,np.sum(np.abs(sublists))])
             strength_list_correlations.append([id_domain,np.sum(np.abs(sublists_corr))])
 
-    return network, strength_list, strength_list_correlations
+    return network, strength_list
 
 # Function for the edge inference
 def edge_inference(tau_max,corr_matrix,cov_matrix,bartlett_std_matrix,domains_pair):
