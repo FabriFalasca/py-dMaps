@@ -215,7 +215,7 @@ Note:
 
 # (vii) Updates
 
-June 2021. As delta gets bigger (parameter alpha is set to small values) we find (a) more domains and (b) sometimes (almost never) these domains do not merge even if a large chunk of their area overlaps. Point (b) is just a consequence of setting small alpha. If you want to 'relax' this constraint by asking to additionally merge domains who share at least 70 percent of the grid cells uncomment the step written by Lucile Ricard from 162 to 195.
+June 2021. As delta gets bigger (parameter alpha is set to small values) we find (a) more domains and (b) sometimes (almost never) these domains do not merge even if a large chunk of their area overlaps. Point (b) is just a consequence of setting small alpha. If you want to 'relax' this constraint by asking to additionally merge domains who share at least 70 percent of the grid cells uncomment the step written by Lucile Ricard from 160 to 195.
 
 # (viii) PUBLICATIONS 
 
