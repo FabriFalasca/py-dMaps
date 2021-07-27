@@ -166,7 +166,6 @@ if __name__ == "__main__":
     complexity of the data
 
     The following function has been written by Lucile Ricard (lucile.ricard@epfl.ch)
-    '''
 
     print('Additional merging of 2 domains IF they share more than 70% of the cells')
 
@@ -192,6 +191,8 @@ if __name__ == "__main__":
     N = np.shape(dom_maps)[0]
     # The new domain ids are simply the first N ids
     dom_ids = sort_d_ids[0:N]
+    
+    '''
 
     # Save them in the output folder
     np.save(domain_results_dir+"domain_maps", dom_maps)
