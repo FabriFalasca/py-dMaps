@@ -24,6 +24,11 @@ import time
 
 start = time.time()
 
+# After installing new version of numpy we have warnings.
+# If you want to remove them simply uncomment these 2 lines.
+#from warnings import simplefilter
+#simplefilter(action='ignore', category=DeprecationWarning)
+
 
 def load_data(path_to_data, climate_variable, latitude_string, longitude_string):
     """
