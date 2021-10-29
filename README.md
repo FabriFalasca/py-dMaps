@@ -213,10 +213,6 @@ Note:
 
 - How you choose the parameters is domain' specific. A general starting point is K = 4 (or 8), alpha = 0.01 and FDR parameter q = 0.05.
 
-# (vii) Updates
-
-June 2021. As delta gets bigger (parameter alpha is set to small values) we find (a) more domains and (b) sometimes (almost never) these domains do not merge even if a large chunk of their area overlaps. Point (b) is just a consequence of setting small alpha. If you want to 'relax' this constraint by asking to additionally merge domains who share at least 70 percent of the grid cells uncomment the step written by Lucile Ricard from 160 to 195.
-
 # (viii) PUBLICATIONS 
 
 I. Fountalis, C. Dovrolis, A. Bracco, B. Dilkina, and S. Keilholz.δ-MAPS from spatio-temporal data to a weighted and lagged network between functional domain.Appl. Netw. Sci., 3:21, 2018.
