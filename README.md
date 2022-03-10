@@ -8,6 +8,9 @@ Fabrizio Falasca (fabrifalasca@gmail.com) and Ilias Fountalis (Foudalisi@hotmail
 
 The framework can be used also as a preprocessing step for running causal algorithms on climate time series. Causal graph discovery often benefits from dimensionality reduction. Domains signals (i.e., time series) identified by δ-MAPS can then be fed to causal discovery algorithms (e.g., https://jakobrunge.github.io/tigramite/) to identify causal linkages.
 
+Info on limitations/bugs and general possible issues about the code are in the folder "debugging_etc". 
+The folder is managed by Ljuba Novi (ljubanovi@yahoo.it)
+
 # Contents
 
 (i) Required Python Packages
