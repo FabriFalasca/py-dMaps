@@ -6,7 +6,7 @@ Contacts
 
 - Fabrizio Falasca (fabrifalasca@gmail.com) and Ilias Fountalis (Foudalisi@hotmail.com)
 
-- Info on limitations/bugs and possible issues with the code are in the folder "debugging_etc". This folder is managed by Ljuba Novi (ljubanovi@yahoo.it).
+- Info on possible issues with the code are in the folder "debugging_etc". This folder is managed by Ljuba Novi (ljubanovi@yahoo.it).
 
 ---
 
