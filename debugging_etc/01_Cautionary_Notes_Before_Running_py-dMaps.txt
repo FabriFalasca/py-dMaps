@@ -7,7 +7,7 @@
 
 # It is strongly recommended to: 
 
-# (a) Mask your land with 1e+20 instead of NaNs;
+# (a) Mask your land if it's NaNs ; 
 # (b) Have you netcdf attribute coordinates in the order: lon,lat,time;
 # (c) Squeeze any 1-D depth dimension, i.e. to have a truly 2D*time field (without ghost dimensions) 
 #
@@ -20,7 +20,7 @@ ncdump -h yourfile.nc
 
 # 1. Remove NaNs from missing values, and substitute them with a mask number meaningful in py-dMaps;
 
-#For example, set Missing Values to 1e+20 instead of NaN
+#For example, set Missing Values to 1e+20 instead of NaN.  
 cdo setmissval,1e+20 input.nc output.nc
 
 
