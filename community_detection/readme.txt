@@ -1,4 +1,16 @@
-Finding spatiotemporal patterns with community detection. Here we use infomap.
+Finding spatiotemporal patterns with community detection. We do so through the infomap method.
+Community detection algorithms are an additional way to reduce the dimensionality of spatiotemporal data without using PCA or any other matrix decomposition algorithm. The are useful as they allow to focus on correlations rather than variance, they define patterns that are not orthogonal. Therefore, even components with smaller variance are identified by the algorithm. This is useful, especially for nonlinear dynamics.
+
+Additionally, if needed, results of d-MAPS can be compared to the one from community detection.
+
+# Note
+
+(i) community detection algorithms will assign every grid cell to a community. This is true even if some time series are actually noise.
+(ii) communities do not have to be spatially contiguous.
+
+d-MAPS take care of issues (i) and (ii).
+
+If (i) and (ii) are not an issue for your specific project, then infomap is a powerful way to reduce the dimensionality of your dataset.
 
 This readme is a work in progress.
 
@@ -19,19 +31,6 @@ we reduce it dimensionality via community detection. We use a powerful community
 detection algorithm known as infomap to find communities.
 Those communities are the patterns we are trying to find. And they are then
 remapped back into the map.
-
-#######################################################
-################### Note:
-#######################################################
-
-(i) community detection algorithms will assign every grid cell to a community.
-This is true even if some time series are actually noise.
-(ii) communities do not have to be spatially contiguous.
-
-d-MAPS take care of issues (i) and (ii).
-
-If (i) and (ii) are not an issue for your spectific project, then infomap represents
-a powerful was to reduce the dimensinality of your dataset.
 
 #######################################################
 ################### Main packages needed
