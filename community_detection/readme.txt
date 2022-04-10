@@ -12,10 +12,12 @@ Additionally, if needed, results of d-MAPS can be compared to the one from commu
 (i) community detection algorithms will assign every grid cell to a community. This is true even if some time series are actually noise.
 (ii) communities do not have to be spatially contiguous.
 
-d-MAPS take care of issues (i) and (ii). Additionally, d-MAPS allows to further investigate a network between domains. Inferring 
-such network may not be reasonable if the domains are not spatially contiguous.
+d-MAPS take care of issues (i) and (ii). Additionally, d-MAPS allows to further investigate a network between domains. Reducing 
+The dimensionality before the network inference process is useful, especially for expensive net. inference algorithms such as for 
+Causal nets. 
+(iii) Inferring such network may not be reasonable if the domains are not spatially contiguous.
 
-If (i) and (ii) are not an issue for your specific project, then infomap is a powerful way to reduce the dimensionality of your dataset.
+If (i), (ii) and (III) are not an issue for your specific project, then infomap is a powerful way to reduce the dimensionality of your dataset.
 
 This readme is a work in progress.
 
