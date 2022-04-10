@@ -162,43 +162,6 @@ if __name__ == "__main__":
 
     print('Done with domain identification')
 
-    '''
-    With very high values of delta (very low alpha) we see (a) lots of domains
-    and (b) few domains may sometimes overlap even when occupying very similar regions.
-    To simplify analyses and interpretations we ask that, after the domain identification
-    is done, two domains should be merged if they have more than 70% percent of cells in common.
-    This happens few times in our data and this heuristic helps furher reducing the
-    complexity of the data
-
-    The following function has been written by Lucile Ricard (lucile.ricard@epfl.ch)
-
-    print('Additional merging of 2 domains IF they share more than 70% of the cells')
-
-    #Domain maps sorted in function of their domain size (descending order)
-    sort_inds, sort_d_sizes, sort_d_ids, sort_d_maps = utils.sort_domains (dom_ids, dom_maps)
-
-    #d_maps_save =  np.copy(sort_d_maps)
-    N, dimx, dimy = sort_d_maps.shape
-    #print('N at 0 iteration = %s' %(N)
-
-    #Merging
-    k = 0 #to break the loop when no domains to merge anymore
-    iteration = 0
-    while not k > 0 :
-        iteration += 1
-        liste_init = utils.compute_liste (sort_d_maps)
-        sort_d_maps, k = utils.to_merge (liste_init,sort_d_maps, k)
-        N, dimx, dimy = sort_d_maps.shape
-        #print('N at %s iteration = %s' %(iteration, N))
-
-    dom_maps = sort_d_maps
-    # number of domains
-    N = np.shape(dom_maps)[0]
-    # The new domain ids are simply the first N ids
-    dom_ids = sort_d_ids[0:N]
-    
-    '''
-
     # Save them in the output folder
     np.save(domain_results_dir+"domain_maps", dom_maps)
     np.save(domain_results_dir+"domain_ids", dom_ids)
