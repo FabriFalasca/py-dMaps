@@ -204,6 +204,10 @@ def infomap_communities(path,climate_variable,lon_variable,lat_variable,
 
 
     print('Embed communities in the map')
+    
+    #########################################################
+    ######### This part as to be re-written in a smarter way. 
+    #########################################################
 
     # Back into the map
 
