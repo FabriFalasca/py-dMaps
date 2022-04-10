@@ -1,5 +1,9 @@
 Finding spatiotemporal patterns with community detection. We do so through the infomap method.
-Community detection algorithms are an additional way to reduce the dimensionality of spatiotemporal data without using PCA or any other matrix decomposition algorithm. The are useful as they allow to focus on correlations rather than variance, they define patterns that are not orthogonal. Therefore, even components with smaller variance are identified by the algorithm. This is useful, especially for nonlinear dynamics.
+Community detection algorithms are an additional way to reduce the dimensionality of spatiotemporal data without using PCA or any other matrix 
+
+decomposition algorithm. The are useful as they allow to focus on correlations rather than variance, they define patterns that are not orthogonal.
+
+Therefore, even components with smaller variance are identified by the algorithm. This is useful, especially for nonlinear dynamics.
 
 Additionally, if needed, results of d-MAPS can be compared to the one from community detection.
 
