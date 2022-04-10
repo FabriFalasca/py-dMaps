@@ -5,12 +5,15 @@ allow to focus on correlations rather than variance. Therefore, even components 
 
 Additionally, if needed, results of d-MAPS can be compared to the one from community detection.
 
-# Note
+#######################################################
+################### Main note:
+#######################################################
 
 (i) community detection algorithms will assign every grid cell to a community. This is true even if some time series are actually noise.
 (ii) communities do not have to be spatially contiguous.
 
-d-MAPS take care of issues (i) and (ii).
+d-MAPS take care of issues (i) and (ii). Additionally, d-MAPS allows to further investigate a network between domains. Inferring 
+such network may not be reasonable if the domains are not spatially contiguous.
 
 If (i) and (ii) are not an issue for your specific project, then infomap is a powerful way to reduce the dimensionality of your dataset.
 
