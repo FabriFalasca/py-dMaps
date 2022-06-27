@@ -32,7 +32,7 @@ The framework can be used also as a preprocessing step for running causal algori
 
 (vii) Updates
 
-(viii) Publications
+(viii) (some) Publications
 
 # (i) Required Python packages
 
