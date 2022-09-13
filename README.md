@@ -238,3 +238,4 @@ Falasca,F., Crétat, J., Braconnot, and Bracco, A. Spatiotemporal complexity and
 
 Novi, L., Bracco, A. & Falasca, F. Uncovering marine connectivity through sea surface temperature. Sci Rep 11, 8839 (2021). https://doi.org/10.1038/s41598-021-87711-z
 
+Falasca, F., Crétat, J., Bracco, A. et al. Climate change in the Indo-Pacific basin from mid- to late Holocene. Clim Dyn 59, 753–766 (2022). https://doi.org/10.1007/s00382-022-06153-z
